@@ -1,46 +1,33 @@
 package middleLayer;
 
-import dataLayer.ResultSet;
-import dataLayer.IsExistsInDB;
-import dataLayer.UpdateInDB;
-
+import dataLayer.StudentsTL;
 public class StudentDetailsEditMl {
+    StudentsTL studentsTLObj=StudentsTL.getStudentsTLObj();
     public boolean isRollNoOrNameExists(String rollNoOrName)
     {
-        String query="SELECT EXISTS(SELECT * FROM StudentsDetails WHERE RollNumber='"+rollNoOrName+"'||Name='"+rollNoOrName+"')AS res";
-        return IsExistsInDB.isExistsInDB(query);
+        return studentsTLObj.isRollNumberOrNameExists(rollNoOrName);
     }
     public java.sql.ResultSet getDetailsUsingRNOrName(String rollNoOrName)
     {
-        String query="SELECT * FROM StudentsDetails WHERE RollNumber='"+ rollNoOrName +"'||Name='"+rollNoOrName+"'";
-        ResultSet resultSetObj =new ResultSet();
-        return resultSetObj.getResultSet(query);
+        return studentsTLObj.getDetailsUsingRNOrName(rollNoOrName);
     }
     public void editStudentDetail(String columnName, String changes, String rollNoOrName)
     {
-        String query="update StudentsDetails SET "+ columnName +"='"+changes+"' WHERE RollNumber='"+ rollNoOrName +"'||Name='"+ rollNoOrName +"'";
-        UpdateInDB updateInDBObj=new UpdateInDB();
-        updateInDBObj.update(query);
+        studentsTLObj.editStudentDetail(columnName, changes, rollNoOrName);
     }
     public void editAge(int age,String rollNoOrName)
     {
-        String query="update StudentsDetails SET Age='"+age+"' WHERE RollNumber='"+ rollNoOrName +"'||Name='"+rollNoOrName+"'";
-        UpdateInDB updateInDBObj=new UpdateInDB();
-        updateInDBObj.update(query);
+        studentsTLObj.editAge(age, rollNoOrName);
     }
     public void changeRegInStudentFeesTable(String rollNoOrName,String newRollNo)
     {
-        String query="update StudentFeesTable SET RollNumber='"+newRollNo+"' WHERE RollNumber='"+ rollNoOrName+"'||Name='"+rollNoOrName+"'";
-        UpdateInDB updateInDBObj=new UpdateInDB();
-        updateInDBObj.update(query);
+        studentsTLObj.changeRegInStudentFeesTable(rollNoOrName, newRollNo);
 
     }
 
     public void changeNameInStudentFeesTable(String rollNoOrName,String newName)
     {
-        String query="update StudentFeesTable SET Name='"+newName+"' WHERE Name='"+ rollNoOrName+"'||RollNumber='"+rollNoOrName+"'";
-        UpdateInDB updateInDBObj=new UpdateInDB();
-        updateInDBObj.update(query);
+        studentsTLObj.changeNameInStudentFeesTable(rollNoOrName, newName);
 
     }
 }

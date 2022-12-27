@@ -1,39 +1,28 @@
 package middleLayer;
-
-import dataLayer.ResultSet;
-import dataLayer.IsExistsInDB;
-import dataLayer.Students;
+import dataLayer.StudentsTL;
 import uiLayer.Student;
 
 public class StudentsProfile {
-    public static void addStudent(Student studentInfo)
+    StudentsTL studentsTLObj=StudentsTL.getStudentsTLObj();
+    public  void addStudent(Student studentInfo)
     {
-
-        Students studentsObj=new Students();
-        studentsObj.insertIntoStudent(studentInfo);
-
+        studentsTLObj.addStudent(studentInfo);
     }
     public boolean isRollNumberOrNameExists(String rollNoOrName)
     {
-        String query="SELECT EXISTS(SELECT * FROM StudentsDetails WHERE RollNumber='"+ rollNoOrName +"'||Name='"+ rollNoOrName +"') AS res";
-        return IsExistsInDB.isExistsInDB(query);
+        return studentsTLObj.isRollNumberOrNameExists(rollNoOrName);
     }
     public java.sql.ResultSet getStudentProfile(String rollNoOrName)
     {
-        String query="SELECT * FROM StudentsDetails WHERE RollNumber='"+ rollNoOrName +"'||Name='"+ rollNoOrName +"'";
-        ResultSet resultSetObj =new ResultSet();
-        return resultSetObj.getResultSet(query);
+        return studentsTLObj.getStudentProfile(rollNoOrName);
     }
 
     public java.sql.ResultSet getStudentsList()
     {
-        String query="SELECT Id,RollNumber,Name FROM StudentsDetails";
-        ResultSet resultSetObj =new ResultSet();
-        return resultSetObj.getResultSet(query);
+        return studentsTLObj.getStudentsList();
     }
     public java.sql.ResultSet getName()
     {
-        ResultSet resultSetObj =new ResultSet();
-        return resultSetObj.getResultSet("SELECT RollNumber,Name FROM StudentsDetails");
+        return studentsTLObj.getName();
     }
 }

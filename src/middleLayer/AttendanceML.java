@@ -1,41 +1,34 @@
 package middleLayer;
 
-import dataLayer.ResultSet;
-import dataLayer.IsExistsInDB;
-import dataLayer.UpdateInDB;
+import dataLayer.AttendanceTL;
+
 import uiLayer.AttendanceCl;
 
 public class AttendanceML {
+    AttendanceTL attendanceTLObj=AttendanceTL.getAttendanceTLObj();
     public void attendanceML(AttendanceCl attendanceClObj)
     {
-        UpdateInDB updateInDBObj =new UpdateInDB();
-        updateInDBObj.update("INSERT INTO Attendance(RollNumber,Date,Status) VALUES('" + attendanceClObj.getRollNumber() + "','" + attendanceClObj.getDate() + "','" + attendanceClObj.getStatus() + "')");
+        attendanceTLObj.insertAttendance(attendanceClObj);
     }
 
     public boolean isAttendanceHistoryAvailable(String date)
     {
-        String query="SELECT EXISTS(SELECT * FROM Attendance WHERE Date='"+date+"') AS res";
-        return IsExistsInDB.isExistsInDB(query);
+        return attendanceTLObj.isAttendanceHistoryAvailable(date);
     }
 
     public java.sql.ResultSet getAttendanceHistory(String date)
     {
-        String query="SELECT RollNumber,Date,Status FROM Attendance WHERE Date='"+date+"'";
-        ResultSet resultSetObj =new ResultSet();
-        return resultSetObj.getResultSet(query);
+        return attendanceTLObj.getAttendanceHistory(date);
     }
 
     public boolean isRollNoAvailOnAttendance(String rollNo)
     {
-        String query="SELECT EXISTS(SELECT * FROM Attendance WHERE RollNumber='"+rollNo+"') AS res";
-        return IsExistsInDB.isExistsInDB(query);
+        return attendanceTLObj.isRollNoAvailOnAttendance(rollNo);
     }
 
     public java.sql.ResultSet getAttendanceHistoryByRollNo(String rollNo)
     {
-        String query="SELECT RollNumber,Date,Status FROM Attendance WHERE RollNumber='"+rollNo+"'";
-        ResultSet resultSetObj =new ResultSet();
-        return resultSetObj.getResultSet(query);
+        return attendanceTLObj.getAttendanceHistoryByRollNo(rollNo);
     }
 
 

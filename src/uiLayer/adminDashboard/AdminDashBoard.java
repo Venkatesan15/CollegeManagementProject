@@ -262,7 +262,9 @@ public class AdminDashBoard implements AdminPage {
         System.out.println("Student Age : "+studentAge);
         System.out.println("Successfully Added");
         System.out.println();
-        StudentsProfile.addStudent(studentInfo);
+
+        StudentsProfile studentsProfileObj=new StudentsProfile();
+        studentsProfileObj.addStudent(studentInfo);
     }
 
 }
